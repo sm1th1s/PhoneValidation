@@ -19,7 +19,7 @@
  </form>
  <div class="alert alert-info" style="display: none;"></div>
  <div class="alert alert-error" style="display: none"></div>
- <div class="alert alert-checker" style="display: none"><p>True</p></div>
+ <div class="alert alert-checker" style="display: block"></div>
  </div>
   <!-- ^^  form code  ^^ -->
  </body>
@@ -42,16 +42,14 @@
 
       const phoneNumber = phoneInput.getNumber();
 
-      info.style.display = "";
       info.innerHTML = `Phone number in E.164 format: <strong>${phoneNumber}</strong>`;
       let pattern = /^\+([0-9]){7,14}[0-9]$/
       checker.style.display = "";
       let result = pattern.test(phoneNumber)
-      
+      console.log(result + phoneNumber)
 
     }
 
 
   </script>
 </html>
- 
