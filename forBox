@@ -1,0 +1,61 @@
+<head>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="form-container">
+    <form onsubmit="submitForm(event)">
+      <label>Input phone number:</label>
+      <input required type="tel" oninput="validate(); help();" onblur="validate();" name="phoneInput" title="valid phone number">
+      <span id="result"></span> <!-- Add a span element with id "result" -->
+
+      <label>Input Full Name:</label>
+      <input required type="text" name="nameInput" title="name">
+      <input type="submit" value="Submit">
+    </form>
+    <span id="submitted"></span>
+  </div>
+</body>
+
+<script> 
+  function submitForm(event) {
+    console.log("submit")
+    event.preventDefault(); // prevent form from submitting 
+
+    const phoneInput = document.getElementsByName("phoneInput")[0].value;
+    const nameInput = document.getElementsByName("nameInput")[0].value;
+
+    const submitted = document.getElementById("submitted");
+    submitted.textContent = "Thanks, you successfully submitted:\n" +
+                          "Name: " + nameInput + "\n" +
+                          "Phone Number: " + phoneInput;
+  }
+
+  function help() {
+    const input = document.getElementsByName("phoneInput")[0].value;
+    const pattern = /^(?:\+|0)[0-9]{7,14}$/;
+
+    const cleanedInput = input.replace(/[\s\(\)\-\+]/g, "");
+
+    const result = document.getElementById("result");
+
+    if (pattern.test(cleanedInput)) {
+      result.style.display = "none"; // hide the result span
+    } else {
+      result.style.display = "block"; // show the result span
+      result.textContent = "Please enter a valid phone number.";
+    }
+  }
+
+  function validate() {
+    const input = document.getElementsByName("phoneInput")[0].value;
+    const pattern = /^(?:\+|0)[0-9]{7,14}$/;
+
+    const cleanedInput = input.replace(/[\s\(\)\-\+]/g, "");
+
+    if (pattern.test(cleanedInput)) {
+      document.getElementsByName("phoneInput")[0].setCustomValidity("");
+    } else {
+      document.getElementsByName("phoneInput")[0].setCustomValidity("invalid");
+    }
+  }
+</script>
