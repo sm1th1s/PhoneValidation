@@ -3,15 +3,13 @@
 </head>
 <body>
   <div class="form-container">
-    <form onsubmit="submitForm(event)">
+    <!-- <form onsubmit="submitForm(event)"> -->
       <label>Input phone number:</label>
-      <input required type="tel" oninput="validate(); help();" onblur="validate();" name="phoneInput" title="valid phone number">
+      <input type="number" oninput="validatePhoneNumber(); help();" onblur="validatePhoneNumber();" name="txtMobile" title="valid phone number">
       <span id="result"></span> <!-- Add a span element with id "result" -->
 
-      <label>Input Full Name:</label>
-      <input required type="text" name="nameInput" title="name">
-      <input type="submit" value="Submit">
-    </form>
+      <input type="submit" value="Submit" onclick="submitForm(event)">
+    <!-- </form> -->
     <span id="submitted"></span>
   </div>
 </body>
@@ -21,17 +19,15 @@
     console.log("submit")
     event.preventDefault(); // prevent form from submitting 
 
-    const phoneInput = document.getElementsByName("phoneInput")[0].value;
-    const nameInput = document.getElementsByName("nameInput")[0].value;
+    const txtMobile = document.getElementsByName("txtMobile")[0].value;
 
     const submitted = document.getElementById("submitted");
     submitted.textContent = "Thanks, you successfully submitted:\n" +
-                          "Name: " + nameInput + "\n" +
-                          "Phone Number: " + phoneInput;
+                            "Phone Number: " + txtMobile;
   }
 
   function help() {
-    const input = document.getElementsByName("phoneInput")[0].value;
+    const input = document.getElementsByName("txtMobile")[0].value;
     const pattern = /^(?:\+|0)[0-9]{7,14}$/;
 
     const cleanedInput = input.replace(/[\s\(\)\-\+]/g, "");
@@ -46,16 +42,16 @@
     }
   }
 
-  function validate() {
-    const input = document.getElementsByName("phoneInput")[0].value;
+  function validatePhoneNumber() {
+    const input = document.getElementsByName("txtMobile")[0].value;
     const pattern = /^(?:\+|0)[0-9]{7,14}$/;
 
     const cleanedInput = input.replace(/[\s\(\)\-\+]/g, "");
 
     if (pattern.test(cleanedInput)) {
-      document.getElementsByName("phoneInput")[0].setCustomValidity("");
+      document.getElementsByName("txtMobile")[0].setCustomValidity("");
     } else {
-      document.getElementsByName("phoneInput")[0].setCustomValidity("invalid");
+      document.getElementsByName("txtMobile")[0].setCustomValidity("invalid");
     }
   }
 </script>
