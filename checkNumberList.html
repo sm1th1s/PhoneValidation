@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Phone Number Validation</title>
+  </head>
+  <body>
+    <h1>Phone Number Validation</h1>
+    <textarea id="numbers" rows="10" cols="50"></textarea>
+    <button onclick="validateNumbers()">Validate Numbers</button>
+    <div id="results"></div>
+
+    <script>
+      function validateNumbers() {
+        // Get the input textarea and split the numbers into an array
+        const input = document.getElementById("numbers");
+        const numbers = input.value.split("\n");
+
+        // Remove spaces and brackets from each number in the array
+ const sanitizedNumbers = numbers.map(number => number.replace(/[\s()\-]/g, ""));
+
+        // Compile the regular expression
+        const pattern = /^(?:\+|0)[0-9]{7,14}$/;
+
+        // Iterate over the array of phone numbers and check if each number matches the pattern
+        let failedNumbers = [];
+        sanitizedNumbers.forEach(number => {
+          if (!pattern.test(number)) {
+            const reason = getFailureReason(number);
+            failedNumbers.push({ number, reason });
+          }
+        });
+
+        // Display the failed numbers in the results div
+        const results = document.getElementById("results");
+        if (failedNumbers.length === 0) {
+          results.innerHTML = "<p>All numbers are valid!</p>";
+        } else {
+          const message = "<p>The following numbers failed to match the pattern:</p>";
+          const listItems = failedNumbers.map(entry => `<li>${entry.number}: ${entry.reason}</li>`).join("");
+          const list = `<ul>${listItems}</ul>`;
+          results.innerHTML = message + list;
+        }
+      }
+
+      function getFailureReason(number) {
+        if (number.length < 7 || number.length > 15) {
+          return "Invalid length";
+        } else if (number.startsWith("+") && number.length < 12) {
+          return "Invalid length for international number";
+        } else if (!number.startsWith("+") && !number.startsWith("0")) {
+          return "Number must start with + or 0";
+        } else {
+          return "Unknown error";
+        }
+      }
+    </script>
+  </body>
+</html>
